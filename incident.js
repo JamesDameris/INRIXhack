@@ -1,18 +1,51 @@
 
 import fetch from "node-fetch";
 
-
-var url = "https://api.iq.inrix.com/v1/incidents?box=37.757386%7C-122.490667%2C37.746138%7C-122.395481&incidentoutputfields=All&incidenttype=Incidents,Flow,Construction&locale=en"
-
+var token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcHBJZCI6Imp6eDV4NzFtYTQiLCJ0b2tlbiI6eyJpdiI6IjQzNDhiMDFhYTEzOGM0MGJhZTI2ZjU3MzBlOTY5YzlkIiwiY29udGVudCI6IjkxOTBkMjljZDc1NTQ1YzUxMTMyNTRhZmU3NzM2Zjg2ODU3YmJlMGMzYTlhNWQzYTI0NTBmZmM0Y2IwNGYyMDE4MmJkNmIyZDk2OTI5MTFlODZiNGE3NDc0MmM3MzI5NDQ2NzhjNDNmY2ZiOGY2YjNhMWYyOThmMGU3NWI2OWUzOWY0NDhhNjBjMTgyZTRjNzRlOWVlZWUzNzE5M2Y3NzI1ZGI1NzI4YWYyYzg1ZGM5YzYyMjViNzUzYTZlYWYwMDc3MGFhZWRkMmIxMDc0OGJjNzhhZmUwNTBiOWQwM2NlMGRlYWY4YmRhNWIzNmQ4NzYwZTc0MjJiYjIyYzFkOWM4MWNmNzVjMDU4ZDY5NmZmN2Q0NjQ3Y2U5Mjc4MDhmZGM0NDFkMmVmMDgxZGMyMzA3MGU4NzEwNGUzZGI5NjY3NTFhMjE5N2EyMTBkZDlmYmY0OGRhMjkyMmY1MmQzNzlhYWQxZmQwMDU5MGU1MTk5MGJkMTk1NGMyM2Y1ZDY0YTFhODg2YWI2MWQ0NzQ3Yjg0ZTNkNjZiMWFhOGNmNWJlNjMxMzc1YjJiYzBlNmVmMTMxOGRjNDc2YzlmMDNlNWE4ODM2ZDlkYzNmOTgwMTc0NTFhOTJlMzZhNGFiNjBjZmQyNWM4Zjg4YTVlNDlmMTNmZjdhMzY2MGNiYTU0ZmFkNTM1ZmNiNzczZmFhZjdlYzgzYzE1OTVjYTkxMjA1OWM5ODMzY2RmNjI5MjZlYjNjNTM0ZjUyZWQ0ODUyNWEyY2QxZDYxOGY5NzIxMjQ0ZDZhMGYxMGE4YzQ1NWYxMTU5MWRkYTZhMTNhNDM3NTcyMzc2MjhkNmZiMjhlYzMzYmMyOTVmZjhjMDk3YjQ2NzQzY2QifSwic2VjdXJpdHlUb2tlbiI6eyJpdiI6IjQzNDhiMDFhYTEzOGM0MGJhZTI2ZjU3MzBlOTY5YzlkIiwiY29udGVudCI6ImI3ZGJkMTlmZTc3NTQ5ZmYzNDZlNjdiZjgwNTg0MmQwZmEyMmMwM2EzNjlhMzk3NzZkNTJjZmExZDQyOGI2NzM4MmIwNDAyM2Q0ODVkMTNkODBhNmJhNzkifSwianRpIjoiMmYyNzczMjktN2RhZS00MjA4LTkwODctYjY4YWJkYjI0NzEyIiwiaWF0IjoxNjM2ODQ4NzY4LCJleHAiOjE2MzY4NTIzNjd9.SFDwcfoxPU-b03_RCaiHrmtkI4TW1EDA19xJ8dikpBg"
+var urlincident = "https://api.iq.inrix.com/v1/incidents?box=37.810716%7C%20-122.457432%2C37.767597%7C-122.380071&incidentoutputfields=All&incidenttype=Flow,RoadWeather&locale=en"
+var urlroute = "https://api.iq.inrix.com/findRoute?wp_1=37.790122%2C%20-122.424491&wp_2=37.791930%2C%20-122.424940&maxAlternates=2&format=json"
 async function test() {
-    const res = await fetch(url, {
+    const res = await fetch(urlincident, {
         headers: {
-            "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcHBJZCI6Imp6eDV4NzFtYTQiLCJ0b2tlbiI6eyJpdiI6IjBiNGVjYmZlOTllZjA5ODcxYzdmMTczNjQ1NWExYWIzIiwiY29udGVudCI6ImE2Y2FhZmEwMTVlNGRkNTZjMjczN2Y0ZGI2NzJiNTljZTc1YzJhODg1NGE0YjNiZmJmMDMxNWFlZDM2MzEzNmQ1NDg3OTUxZDkzNDAxNzBhZDU3MDdiYzcwMGViNDBhMzAyYzcxZDU2MzcyNmVlOTk5YjdkZTkzYjNiZTUzNDUxNTY3NjdmOTc3NTM5YjJlY2IxZDQxNGFiOWFkZTBjNDg1YzRmNGNhZmJlMzUxMTYwYmNiNTgyM2JmNjYxNzIzMzA4N2M2N2VkOWQ2YWM4MWJmNDU4YmNlNGZlYmE5NWU0ZjZiYmQyMjNjMGIzZGQ4ODMzNmFlMTc4MjRkYjI0NTZhZDEzZjNhMDE2NWE0OGRjNWZkZTMwYjAyNTA5NjQyNDVjOGI5MzliYTAyNDg1ODFhYjQwMjJhNjcwMTVkMjc5YzgyOTQxYjVhN2FhMTk5N2Y0M2FkYTc2ZjY2MTM3NjBmMDMzY2RjMzkxMzRkZmNiYjc4OTdiNjQ5MDQ1MjM2MWViZmFmMjc4MWFhMzZiOTA2YWY0NTgzMWY4OGFiNTM2OWRhYWY2YzM4MDcwMDVhY2YxMGMzM2Y5MTcxZjI0Nzg1NDVlZDgwMWU4Mjc0OWYyODNmYjI3NWEyYTE1OTkzMzQwZTRjZjYzMGRjYTE3MmIzNWUwNTk4ZGUxMzBiOGNmYzYxMjNhZWIyODVlZGE3MWUwYWZiZDI0NTQwZTllODcwOGY3MmJlMGQ4MGFlM2ExZDZlNTNmZTY4MTljNmRjODI2NjM1ZmE5Mzg4OWYxMzM0NDFkMjJmNjZjYmJlMjJkZjUzNWFkNzUyMGRmODEwN2I0YzRmZDQ2MzU5OTIyNjY5YjM3OGU5YTExODM5ZjU5Nzk4YzMzIn0sInNlY3VyaXR5VG9rZW4iOnsiaXYiOiIwYjRlY2JmZTk5ZWYwOTg3MWM3ZjE3MzY0NTVhMWFiMyIsImNvbnRlbnQiOiI5MWY2OTdmMTE4OTY4NzZlZjQ3NjA1NjlhMDQwOWVlYWNkNTMyMDlmNTE5Mzg2ZTFlZDExMWZmZGVjM2MwNTAyNGQ5MTk5NmVlYzE2MTQxM2NjNTg2NmY5In0sImp0aSI6IjIzYjMyMzYxLWE2NmItNDliMi05YmU4LWJkYjc5MjEyY2EwYyIsImlhdCI6MTYzNjg0MTI0NSwiZXhwIjoxNjM2ODQ0ODQ1fQ.tX9X8vCubokOMrBSgOgX51qqk6TeB9UnPI1DPFwGyS0"
+            "Authorization": token
         }
     });
     const myJson = await res.json();
-    //console.log(myJson.result);
     return myJson;
 }
-var item = await test();
-console.log("tail:", item.result.incidents[0].roadName);
+var itemInc = await test();
+
+async function test1() {
+const res2 = await fetch(urlroute, {
+    headers: {
+        "Authorization": token
+    }
+    });
+    const myJson1 = await res2.json();
+    return myJson1;
+}
+var itemRoute = await test1();
+//console.log("road:", itemInc.result.incidents[0].parameterizedDescription.roadName);
+//console.log("here: ", itemInc.result.incidents[0])
+var incArray = []; //incident array
+for (let i = 0; i < itemInc.result.incidents.length; ++i) {
+    incArray.push(itemInc.result.incidents[i]);
+}
+//console.log(incArray[2].parameterizedDescription.roadName);
+// console.log(itemRoute.result.trip.routes[0].summary);
+// console.log(itemRoute.result.trip.routes[0].summary.roads.name);
+function avoidance() {
+    for (let j = 0; j < incArray.length; ++j) {
+        for (let k = 0; k < itemRoute.result.trip.routes[0].summary.roads.length; ++k) {
+            console.log("Route roads: ",itemRoute.result.trip.routes[0].summary.roads[k].name.toLowerCase());
+            console.log("Incident roads: ",incArray[j].parameterizedDescription.roadName);
+            if (incArray[j].parameterizedDescription.roadName.toLowerCase() == itemRoute.result.trip.routes[0].summary.roads[k].name.toLowerCase()) {
+                console.log("Avoid!");
+                return;
+            }
+        }
+    }
+    console.log("Take Route!");
+    return;
+}
+avoidance();
