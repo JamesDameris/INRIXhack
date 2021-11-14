@@ -1,9 +1,8 @@
-
 import fetch from "node-fetch";
 
-var token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcHBJZCI6Imp6eDV4NzFtYTQiLCJ0b2tlbiI6eyJpdiI6IjQzNDhiMDFhYTEzOGM0MGJhZTI2ZjU3MzBlOTY5YzlkIiwiY29udGVudCI6IjkxOTBkMjljZDc1NTQ1YzUxMTMyNTRhZmU3NzM2Zjg2ODU3YmJlMGMzYTlhNWQzYTI0NTBmZmM0Y2IwNGYyMDE4MmJkNmIyZDk2OTI5MTFlODZiNGE3NDc0MmM3MzI5NDQ2NzhjNDNmY2ZiOGY2YjNhMWYyOThmMGU3NWI2OWUzOWY0NDhhNjBjMTgyZTRjNzRlOWVlZWUzNzE5M2Y3NzI1ZGI1NzI4YWYyYzg1ZGM5YzYyMjViNzUzYTZlYWYwMDc3MGFhZWRkMmIxMDc0OGJjNzhhZmUwNTBiOWQwM2NlMGRlYWY4YmRhNWIzNmQ4NzYwZTc0MjJiYjIyYzFkOWM4MWNmNzVjMDU4ZDY5NmZmN2Q0NjQ3Y2U5Mjc4MDhmZGM0NDFkMmVmMDgxZGMyMzA3MGU4NzEwNGUzZGI5NjY3NTFhMjE5N2EyMTBkZDlmYmY0OGRhMjkyMmY1MmQzNzlhYWQxZmQwMDU5MGU1MTk5MGJkMTk1NGMyM2Y1ZDY0YTFhODg2YWI2MWQ0NzQ3Yjg0ZTNkNjZiMWFhOGNmNWJlNjMxMzc1YjJiYzBlNmVmMTMxOGRjNDc2YzlmMDNlNWE4ODM2ZDlkYzNmOTgwMTc0NTFhOTJlMzZhNGFiNjBjZmQyNWM4Zjg4YTVlNDlmMTNmZjdhMzY2MGNiYTU0ZmFkNTM1ZmNiNzczZmFhZjdlYzgzYzE1OTVjYTkxMjA1OWM5ODMzY2RmNjI5MjZlYjNjNTM0ZjUyZWQ0ODUyNWEyY2QxZDYxOGY5NzIxMjQ0ZDZhMGYxMGE4YzQ1NWYxMTU5MWRkYTZhMTNhNDM3NTcyMzc2MjhkNmZiMjhlYzMzYmMyOTVmZjhjMDk3YjQ2NzQzY2QifSwic2VjdXJpdHlUb2tlbiI6eyJpdiI6IjQzNDhiMDFhYTEzOGM0MGJhZTI2ZjU3MzBlOTY5YzlkIiwiY29udGVudCI6ImI3ZGJkMTlmZTc3NTQ5ZmYzNDZlNjdiZjgwNTg0MmQwZmEyMmMwM2EzNjlhMzk3NzZkNTJjZmExZDQyOGI2NzM4MmIwNDAyM2Q0ODVkMTNkODBhNmJhNzkifSwianRpIjoiMmYyNzczMjktN2RhZS00MjA4LTkwODctYjY4YWJkYjI0NzEyIiwiaWF0IjoxNjM2ODQ4NzY4LCJleHAiOjE2MzY4NTIzNjd9.SFDwcfoxPU-b03_RCaiHrmtkI4TW1EDA19xJ8dikpBg"
+var token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcHBJZCI6ImxwejljeTRsbjYiLCJ0b2tlbiI6eyJpdiI6ImE2NzEwNzcyN2FhZGU3OTM3NWNjMTIwZDIxYjg0NTFiIiwiY29udGVudCI6IjRmZjczZGJmZjVjMGY1ZmNkMGYwNWJmY2UyZDM5ZmU1ZThkZTUwMWI5NzY4ZWIwZmVkODRlNDU3MTJlNWNiZjBjODZlYjM1OWFmY2U4Mjk1YWJlOTBlMTZlZTgxYmJlNDE1YWU2YzZmMGYyYzZlMGUxNjMwNzgzOWQxYzIyNzQyNWNjMmY5YTFjNmM5ODEyMjRmM2NmMjA3MDkzOTU0ZmJlY2Y2MzZkOGRjNmM1ZGYxNDNiMGZmODNhZTUxMjBmNGU1YzMxZmNhOTU3MTc4OWQyNmU3NzdjYzg4OTc2ZGI0NzQxOGM4NTFlOWE4MDk2MjU2MzE4NmViMmExZDg2YzYyZDNiMDg0OGViOTEyNTYzYTM5NjUzNTVlMGZiYTRkN2M2NGIwYzUzZmZlNjAxNTdjZmFlMTdhMmQ3YTgxMjZmMDMxZjRlODNkMzI5MGI3OTY1ZWRjYjRhMDU3MmZmMWRhNzEzN2RhZDc5YjNmNGNjZDkwODk2YTdmNTY4ZWE2NGZhMTM5NjFlNTA3ZTkyMWYxMGZiZThjZDFlN2IwM2Y5OTA3N2YwZTA1ZmM4ODgzM2MyNzMzM2ZjYTNlOGE3Zjg0YjdhZTE3MzExMTA4ZmY5N2U1MDk1MWYzNjdlNTUzMDg4MDI4MzljZjI0YTJkZmI3NjJlZThjMWZhOWE2MTQxZjIzMjlhNDExYTAzZmM5MmRlZjE5MjI3YmQ2Yjc4OGIyNjlmY2FkM2U4MWU5MzUzYWU1YjkzYWM3NGQ1Zjg2ZjMyOGMyNjBlYjFjYTgyNmEyOGU3OWI1MjNhZGYyZWUzNDg2NzhjMGYzY2E1YTI2OWFjNTZiNThlYzk0YjY4ODhhNTcyMDgxYmNmMTA4ZDMxM2RiOWEzIn0sInNlY3VyaXR5VG9rZW4iOnsiaXYiOiJhNjcxMDc3MjdhYWRlNzkzNzVjYzEyMGQyMWI4NDUxYiIsImNvbnRlbnQiOiIxOGMxM2NhNmYxZTBlMmFjYWNlMDc2ZjBjZGUxZTVlMGQwZmE2YzVmZTk1Y2Y0MTdmYThiYzUxMTBlZTFkNWU0Yzg0OWI1MGRmMGVmYmU4YjhiZTAxMzI4In0sImp0aSI6IjdkYzcyYjcyLTQ2MDMtNGIzMy1iODE0LTg2ODczODY1ZWMzYiIsImlhdCI6MTYzNjg1MzQ4MiwiZXhwIjoxNjM2ODU3MDgyfQ.41IWf7nYn-35__ITXbg6Y09_eL9RWVpIGEu9OB1mX8I"
 var urlincident = "https://api.iq.inrix.com/v1/incidents?box=37.810716%7C%20-122.457432%2C37.767597%7C-122.380071&incidentoutputfields=All&incidenttype=Flow,RoadWeather&locale=en"
-var urlroute = "https://api.iq.inrix.com/findRoute?wp_1=37.790122%2C%20-122.424491&wp_2=37.791930%2C%20-122.424940&maxAlternates=2&format=json"
+var urlroute = "https://na-api.inrix.com/Traffic/Inrix.ashx?Action=FindRoute&units=1&locale=en-US&wp_1=37.766223,-122.426577&wp_2=37.763183,-122.421556&maxAlternates=2&RouteOutputFields=B,M,P,S,W&RoutingType=Traffic&IsAmbiguousOrigin=true&format=json&token=NhOHgUOddmZtbQmBW844ylAJ7vGhPxw-hcssnMhOMW8|&UseTraffic=true&compress=true"
 async function test() {
     const res = await fetch(urlincident, {
         headers: {
@@ -34,6 +33,23 @@ for (let i = 0; i < itemInc.result.incidents.length; ++i) {
 //console.log(incArray[2].parameterizedDescription.roadName);
 // console.log(itemRoute.result.trip.routes[0].summary);
 // console.log(itemRoute.result.trip.routes[0].summary.roads.name);
+function incident_on_route() {
+    //all coordinates for incidents stored in incArray
+    //go through all coordinate points in route and compare to incident coords
+    // for(let i = 0; i < itemRoute.result.trip.routes.length; i++)
+    // {
+    //     for(let k = 0; k < itemRoute.result.trip.routes[i].points.coordinates.length; k++)
+    //     {
+    //         for(let j = 0; j < itemInc.result.incidents.length; j++)
+    //         {
+    //             if(itemRoute.result.trip.routes[i].points.coordinates[k] )
+    //         }
+    //     }
+        
+    // }
+    //if coordinates are within certain range(will not be exact coords)
+}
+
 function avoidance() {
     for (let j = 0; j < incArray.length; ++j) {
         for (let k = 0; k < itemRoute.result.trip.routes[0].summary.roads.length; ++k) {
@@ -48,4 +64,6 @@ function avoidance() {
     console.log("Take Route!");
     return;
 }
-avoidance();
+
+//avoidance();
+console.log(itemRoute.result.trip.routes[0].points.coordinates.length)
