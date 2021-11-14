@@ -1,42 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Vanilla Axios</title>
-  <style>
-    body {
-      background-color: #673AB7;
-      color: white;
-    }
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    li {
-      margin-bottom: .5em;
-      margin-top: .5em;
-      padding: 1em;
-      border: 1px solid white;
-      transition-property: background-color, color;
-      transition-duration: 500ms;
-      transition-timing-function: ease-in-out;
-    }
-    li:hover {
-      background-color: white;
-      color: black;
-    }
-  </style>
-</head>
+<html>
+  <head>
+    <META charset="UTF-8" />
+    <title>
+        Find Safest Route
+    </title>
+    <link rel="stylesheet" type="text/css" media="all" href="style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+   <style> #map
+    {
+        width: auto;
+        height: 600px;
+    }</style>
+  </head>
 <body>
-  <div>
-    <h1>Todos</h1>
-    <ul>
+<div id="content">
+  <article>
+    <header><h2>Find Safest Route</h2></header>
+</div>
+<div id="map"></div>
+    <script>
+        //initialize SF to be map
+        //source:https://github.com/INRIX/iq-api-samples/blob/master/ui/samples/routing.html
+        const southWest = L.latLng(37.718455, -122.350874),
+        northEast = L.latLng(37.810963, -122.535406);
+        const bounds = L.latLngBounds(southWest, northEast);
+        const mymap = new L.map('map', {
+        zoom: 13,
+        center: bounds.getCenter(),
+        });
 
-    </ul>
-  </div>
-  <script src="app.js"></script>
-</body>
+        //array of route coordinates
+        let route_coords =[
+            [ -122.42661245404953, 37.76621856983869 ],
+            [ -122.426598072052, 37.766146659851074 ],
+            [ -122.42655515670776, 37.76573896408081 ],
+            [ -122.42651224136353, 37.76530981063843 ],
+            [ -122.4264907836914, 37.765052318573 ],
+            [ -122.42644786834717, 37.764623165130615 ],
+            [ -122.42642641067505, 37.76432275772095 ],
+            [ -122.42640495300293, 37.76421546936035 ],
+            [ -122.42638349533081, 37.7639365196228 ],
+            [ -122.42634057998657, 37.76350736618042 ],
+            [ -122.42634057998657, 37.763357162475586 ],
+            [ -122.42631912231445, 37.76299238204956 ],
+            [ -122.4261474609375, 37.76301383972168 ],
+            [ -122.42606163024902, 37.76301383972168 ],
+            [ -122.42511749267578, 37.76307821273804 ],
+            [ -122.42393732070923, 37.763164043426514 ],
+            [ -122.42307901382446, 37.76320695877075 ],
+            [ -122.42271423339844, 37.76322841644287 ],
+            [ -122.42241382598877, 37.76324987411499 ],
+            [ -122.42230653762817, 37.76324987411499 ],
+            [ -122.42219924926758, 37.76324987411499 ],
+            [ -122.42174863815308, 37.76329278945923 ],
+            [ -122.42156459462564, 37.76330115507411 ]
+        ];
+
+        var myGeoJsonObject = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [ -122.42661245404953, 37.76621856983869 ],
+  [ -122.426598072052, 37.766146659851074 ],
+  [ -122.42655515670776, 37.76573896408081 ],
+  [ -122.42651224136353, 37.76530981063843 ],
+  [ -122.4264907836914, 37.765052318573 ],
+  [ -122.42644786834717, 37.764623165130615 ],
+  [ -122.42642641067505, 37.76432275772095 ],
+  [ -122.42640495300293, 37.76421546936035 ],
+  [ -122.42638349533081, 37.7639365196228 ],
+  [ -122.42634057998657, 37.76350736618042 ],
+  [ -122.42634057998657, 37.763357162475586 ],
+  [ -122.42631912231445, 37.76299238204956 ],
+  [ -122.4261474609375, 37.76301383972168 ],
+  [ -122.42606163024902, 37.76301383972168 ],
+  [ -122.42511749267578, 37.76307821273804 ],
+  [ -122.42393732070923, 37.763164043426514 ],
+  [ -122.42307901382446, 37.76320695877075 ],
+  [ -122.42271423339844, 37.76322841644287 ],
+  [ -122.42241382598877, 37.76324987411499 ],
+  [ -122.42230653762817, 37.76324987411499 ],
+  [ -122.42219924926758, 37.76324987411499 ],
+  [ -122.42174863815308, 37.76329278945923 ],
+  [ -122.42156459462564, 37.76330115507411 ]
+
+        ]
+      }
+    }
+  ]
+}
+
+L.geoJSON(myGeoJsonObject).addTo(mymap);
+
+        const osm = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        minZoom: 5,
+        maxZoom: 18,
+        });
+        mymap.addLayer(osm);
+        // for (let i = 0; i < route_coords.length; i++){
+        //     L.marker()
+        // }
+
+    </script>
+  </body>
 </html>
