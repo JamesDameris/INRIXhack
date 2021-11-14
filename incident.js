@@ -1,6 +1,5 @@
 import fetch from "node-fetch";
-
-var token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcHBJZCI6ImxwejljeTRsbjYiLCJ0b2tlbiI6eyJpdiI6ImE2NzEwNzcyN2FhZGU3OTM3NWNjMTIwZDIxYjg0NTFiIiwiY29udGVudCI6IjRmZjczZGJmZjVjMGY1ZmNkMGYwNWJmY2UyZDM5ZmU1ZThkZTUwMWI5NzY4ZWIwZmVkODRlNDU3MTJlNWNiZjBjODZlYjM1OWFmY2U4Mjk1YWJlOTBlMTZlZTgxYmJlNDE1YWU2YzZmMGYyYzZlMGUxNjMwNzgzOWQxYzIyNzQyNWNjMmY5YTFjNmM5ODEyMjRmM2NmMjA3MDkzOTU0ZmJlY2Y2MzZkOGRjNmM1ZGYxNDNiMGZmODNhZTUxMjBmNGU1YzMxZmNhOTU3MTc4OWQyNmU3NzdjYzg4OTc2ZGI0NzQxOGM4NTFlOWE4MDk2MjU2MzE4NmViMmExZDg2YzYyZDNiMDg0OGViOTEyNTYzYTM5NjUzNTVlMGZiYTRkN2M2NGIwYzUzZmZlNjAxNTdjZmFlMTdhMmQ3YTgxMjZmMDMxZjRlODNkMzI5MGI3OTY1ZWRjYjRhMDU3MmZmMWRhNzEzN2RhZDc5YjNmNGNjZDkwODk2YTdmNTY4ZWE2NGZhMTM5NjFlNTA3ZTkyMWYxMGZiZThjZDFlN2IwM2Y5OTA3N2YwZTA1ZmM4ODgzM2MyNzMzM2ZjYTNlOGE3Zjg0YjdhZTE3MzExMTA4ZmY5N2U1MDk1MWYzNjdlNTUzMDg4MDI4MzljZjI0YTJkZmI3NjJlZThjMWZhOWE2MTQxZjIzMjlhNDExYTAzZmM5MmRlZjE5MjI3YmQ2Yjc4OGIyNjlmY2FkM2U4MWU5MzUzYWU1YjkzYWM3NGQ1Zjg2ZjMyOGMyNjBlYjFjYTgyNmEyOGU3OWI1MjNhZGYyZWUzNDg2NzhjMGYzY2E1YTI2OWFjNTZiNThlYzk0YjY4ODhhNTcyMDgxYmNmMTA4ZDMxM2RiOWEzIn0sInNlY3VyaXR5VG9rZW4iOnsiaXYiOiJhNjcxMDc3MjdhYWRlNzkzNzVjYzEyMGQyMWI4NDUxYiIsImNvbnRlbnQiOiIxOGMxM2NhNmYxZTBlMmFjYWNlMDc2ZjBjZGUxZTVlMGQwZmE2YzVmZTk1Y2Y0MTdmYThiYzUxMTBlZTFkNWU0Yzg0OWI1MGRmMGVmYmU4YjhiZTAxMzI4In0sImp0aSI6IjdkYzcyYjcyLTQ2MDMtNGIzMy1iODE0LTg2ODczODY1ZWMzYiIsImlhdCI6MTYzNjg1MzQ4MiwiZXhwIjoxNjM2ODU3MDgyfQ.41IWf7nYn-35__ITXbg6Y09_eL9RWVpIGEu9OB1mX8I"
+var token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcHBJZCI6Imp6eDV4NzFtYTQiLCJ0b2tlbiI6eyJpdiI6IjU2NWMxZWNkOTRjMGVhNGQwNDgwYTBmYjI5ZWFkYjg5IiwiY29udGVudCI6ImFmYWIyOTExNzM2N2IyYzI1ZjZhOTY3NzUxMGI5ZTIxZDM4OTJkMzhkZDE0MjZjYzI0YmJiZWFmYmRjZmQ4Njk4MDhhYWFjNzZmNTg3Y2MyZjFjNDlkNTZjOGYyN2IwYzk4MTgxZmUzNDA0MDI1ODhhYzY3YjhhYTU2ODIxY2QwODA5YWI2ZjBjMTFiN2ZlODkwOGVkNzNhMWEwYjc5MzgxMTViOThkYzg0NjNjMWU3YTRiMGNhZDY2MDI5NDgxYWIyZjcxMTVjZDIwYTA4MTc0YjVjZGRmOWM3NzQyMDg0YTZkMDkyNTIzYWY3MmZlZTBiNTk0ODUwODBhZmFhZjZmZTk2ZjdlZGI2YTI0YjUxYmUxNDgwMzA4YzE3N2U5NmRmMWJiNGU1OGNlM2NiM2U1NmQ2NmRiZTYyZTdiMTg0ZmNlYmM3NDJiY2FkNjNjNGY3MWQyNDJhZjZmOWJiOTMxOWJlOWVlZWU4YzUxMjA3N2JjYzQ0YWJhODIyNmY4MzQ3YjM4MTRmNWM0MTc4NTc4NWVlNmE3YmM5YTY1ODM5YWQ2OTRkM2ExNGU0ZTJmZTA2YTFlMWMwZDE3MGZjNjFhYWUyNmZkY2I4ZjYzNzllOWVkMjU5YmZiNGRlN2E5YzNiNjA0NTIxZGMyYzBmNzM3NTA3ZDdlZGFlYmEzMjEzNzc4ODUyYjJlZDRkZDc4MTQwN2MwZmJkYTJlNGQ1MWQyZDkxYzgwODJkYmMyM2VmMTE5NDc0ZWJiMDQxZmU0OTRiMzJiMWE5MjJkNTJhMGJlMDM1MzA0NTA2YTNhMzg1Y2ZjOGYyMWNhODYyYTQyYzQxNWVkOGFhNTUzZGViNjllNGM3M2I0OWUxOWZjODliYWM3ZjdjIn0sInNlY3VyaXR5VG9rZW4iOnsiaXYiOiI1NjVjMWVjZDk0YzBlYTRkMDQ4MGEwZmIyOWVhZGI4OSIsImNvbnRlbnQiOiJhMjg0MDg0YzVhMTc5NmU2Mjk2NWY2N2E3NDEwZWUyNGFhODgyYzI0YzUxOTBjY2E3NWJhOThkZmEwY2NlNjQ0YjVmYWFmOWIyYjZhNDJkYWZlZTBhMjY4In0sImp0aSI6IjRlOWNhMWQxLWZlYTgtNGNmYS05MzA5LWNmN2I3NWJjZGEyMCIsImlhdCI6MTYzNjg2MDkwNCwiZXhwIjoxNjM2ODY0NTAyfQ.qfQFzCMoIgdbrMK2ZSP2NP-EyuT_zry5wJEibs3waPA"
 var urlincident = "https://api.iq.inrix.com/v1/incidents?box=37.810716%7C%20-122.457432%2C37.767597%7C-122.380071&incidentoutputfields=All&incidenttype=Flow,RoadWeather&locale=en"
 var urlroute = "https://na-api.inrix.com/Traffic/Inrix.ashx?Action=FindRoute&units=1&locale=en-US&wp_1=37.766223,-122.426577&wp_2=37.763183,-122.421556&maxAlternates=2&RouteOutputFields=B,M,P,S,W&RoutingType=Traffic&IsAmbiguousOrigin=true&format=json&token=NhOHgUOddmZtbQmBW844ylAJ7vGhPxw-hcssnMhOMW8|&UseTraffic=true&compress=true"
 async function test() {
@@ -31,24 +30,34 @@ for (let i = 0; i < itemInc.result.incidents.length; ++i) {
     incArray.push(itemInc.result.incidents[i]);
 }
 //console.log(incArray[2].parameterizedDescription.roadName);
-// console.log(itemRoute.result.trip.routes[0].summary);
+console.log(itemRoute.result.trip.routes[0].points.coordinates);
 // console.log(itemRoute.result.trip.routes[0].summary.roads.name);
 function incident_on_route() {
-    //all coordinates for incidents stored in incArray
-    //go through all coordinate points in route and compare to incident coords
-    // for(let i = 0; i < itemRoute.result.trip.routes.length; i++)
-    // {
-    //     for(let k = 0; k < itemRoute.result.trip.routes[i].points.coordinates.length; k++)
-    //     {
-    //         for(let j = 0; j < itemInc.result.incidents.length; j++)
-    //         {
-    //             if(itemRoute.result.trip.routes[i].points.coordinates[k] )
-    //         }
-    //     }
+    var incCounter = [itemRoute.result.trip.routes.length];
+    for (let init = 0; init < itemRoute.result.trip.routes.length; ++init) {
+        incCounter[init] = 0;
+    }
+   // all coordinates for incidents stored in incArray
+   // go through all coordinate points in route and compare to incident coords
+    for(let i = 0; i < itemRoute.result.trip.routes.length; ++i)
+    {
+        for(let k = 0; k < itemRoute.result.trip.routes[i].points.coordinates.length; ++k)
+        {
+            for(let j = 0; j < itemInc.result.incidents.length; ++j)
+            {
+                if( Math.abs(itemRoute.result.trip.routes[i].points.coordinates[k] - incArray[j].geometry.coordinates) > 0.001 ) {
+                    ++incCounter[i];
+                }
+            }
+        }
         
-    // }
+    }
+    return incCounter;
     //if coordinates are within certain range(will not be exact coords)
 }
+var incidents = incident_on_route();
+console.log(incidents);
+
 
 function avoidance() {
     for (let j = 0; j < incArray.length; ++j) {
@@ -66,4 +75,4 @@ function avoidance() {
 }
 
 //avoidance();
-console.log(itemRoute.result.trip.routes[0].points.coordinates.length)
+//console.log(itemRoute.result.trip.routes[0].points.coordinates.length);
