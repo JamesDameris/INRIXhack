@@ -41,15 +41,16 @@ function incident_on_route() {
    // go through all coordinate points in route and compare to incident coords
     for(let i = 0; i < itemRoute.result.trip.routes.length; ++i)
     {
-        for(let k = 0; k < itemRoute.result.trip.routes[i].points.coordinates.length; ++k)
-        { 
-            for(let j = 0; j < itemInc.result.incidents.length; ++j)
-            {   
-            console.log("Difference: ", Math.abs(incArray[j].geometry.coordinates[0]-itemRoute.result.trip.routes[i].points.coordinates[k][0]));
+        for(let j = 0; j < itemInc.result.incidents.length; ++j)
+        {    
+            for(let k = 0; k < itemRoute.result.trip.routes[i].points.coordinates.length; ++k)
+            { 
+                console.log("Difference: ", Math.abs(incArray[j].geometry.coordinates[0]-itemRoute.result.trip.routes[i].points.coordinates[k][0]));
                 if((Math.abs(itemRoute.result.trip.routes[i].points.coordinates[k][1] - incArray[j].geometry.coordinates[1])) <= 0.001 
                 && Math.abs(incArray[j].geometry.coordinates[0]-itemRoute.result.trip.routes[i].points.coordinates[k][0]) <= 0.001
                 ){
                     ++incCounter[i];
+                    break;
                 }
             }
         }  
@@ -59,7 +60,7 @@ function incident_on_route() {
 }
 var incidents = incident_on_route();
 console.log(incidents);
-
+console.log(itemInc.result.incidents.length);
 
 function avoidance() {
     for (let j = 0; j < incArray.length; ++j) {
